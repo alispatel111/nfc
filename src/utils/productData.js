@@ -1,5 +1,5 @@
-// Your deployed backend URL
-const API_BASE_URL = "https://tap-pin-pay-nfc-backend.vercel.app/api"
+// Your deployed backend URL - Update this with your actual backend URL
+const API_BASE_URL = "https://your-backend-app.vercel.app/api"
 
 // Test API connection on load
 const testConnection = async () => {

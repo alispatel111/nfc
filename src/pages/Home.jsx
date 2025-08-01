@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
-import toast from "react-hot-toast"
 import QRScannerComponent from "../components/QRScanner.jsx"
 import ManualProductEntry from "../components/ManualProductEntry.jsx"
 import { useCart } from "../utils/CartContext.jsx"
@@ -29,93 +28,36 @@ const Home = () => {
     setLastAddedProduct(product)
     setIsScannerActive(false)
 
-    toast.success(`✅ ${product.name} added to cart!`, {
-      id: `product-added-${product.id}`,
-      duration: 3000,
-      icon: "🛒",
-    })
+    // Removed toast.success
   }
 
   const handleAddMoreProducts = () => {
     setIsScannerActive(true)
     setLastAddedProduct(null)
-    toast.success("Scanner activated! Ready to scan more products.", {
-      id: "scanner-reactivated",
-      icon: "📱",
-    })
+    // Removed toast.success
   }
 
   const handleClearCart = () => {
-    toast(
-      (t) => (
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-          <span style={{ fontWeight: "500" }}>Clear entire cart?</span>
-          <div style={{ display: "flex", gap: "0.5rem" }}>
-            <button
-              style={{
-                padding: "0.25rem 0.75rem",
-                background: "var(--danger-color)",
-                color: "white",
-                borderRadius: "var(--radius-md)",
-                fontSize: "0.875rem",
-                fontWeight: "500",
-                border: "none",
-                cursor: "pointer",
-                transition: "var(--transition)",
-              }}
-              onClick={() => {
-                clearCart()
-                if (window.resetScannedProducts) {
-                  window.resetScannedProducts()
-                }
-                setLastAddedProduct(null)
-                setIsScannerActive(true)
-                toast.dismiss(t.id)
-                toast.success("Cart cleared successfully!", { icon: "🗑️" })
-              }}
-            >
-              Yes, Clear
-            </button>
-            <button
-              style={{
-                padding: "0.25rem 0.75rem",
-                background: "var(--text-secondary)",
-                color: "white",
-                borderRadius: "var(--radius-md)",
-                fontSize: "0.875rem",
-                fontWeight: "500",
-                border: "none",
-                cursor: "pointer",
-                transition: "var(--transition)",
-              }}
-              onClick={() => toast.dismiss(t.id)}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      ),
-      {
-        duration: 5000,
-        icon: "⚠️",
-      },
-    )
+    const confirmed = window.confirm("Clear entire cart? This action cannot be undone.")
+    if (confirmed) {
+      clearCart()
+      if (window.resetScannedProducts) {
+        window.resetScannedProducts()
+      }
+      setLastAddedProduct(null)
+      setIsScannerActive(true)
+      // Removed toast.success
+    }
   }
 
   const toggleManualEntry = () => {
     setShowManualEntry(!showManualEntry)
-    toast.success(showManualEntry ? "Scanner mode activated" : "Manual entry mode activated", {
-      id: "manual-entry-toggle",
-      icon: showManualEntry ? "📷" : "📝",
-    })
+    // Removed toast.success
   }
 
   const handleScanModeChange = (mode) => {
     setScanMode(mode)
-    toast.success(mode === "qr" ? "QR Scanner activated" : "NFC Reader activated", {
-      id: `scan-mode-${mode}`,
-      icon: mode === "qr" ? "📷" : "📱",
-    })
+    // Removed toast.success
   }
 
   return (
@@ -396,7 +338,6 @@ const Home = () => {
             <div>• One-click add to cart</div>
             <div>• Real-time search functionality</div>
             <div>• Duplicate prevention system</div>
-            <div>• Modern toast notifications</div>
             <div>• Responsive design for all devices</div>
           </div>
         </div>

@@ -1,4 +1,3 @@
-"use client"
 
 import { useState, useEffect, Suspense } from "react"
 import { Link } from "react-router-dom"
@@ -220,47 +219,49 @@ const LandingPage = () => {
           transition={{ duration: 1, delay: 0.2 }}
           className="hero-content"
         >
-          <motion.div
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="hero-title-container"
-          >
-            <h1 className="hero-main-title">Tip Tap Pay</h1>
-            <div className="hero-subtitle">
-              Future of <span className="hero-subtitle-highlight">Digital Shopping</span>
-            </div>
-          </motion.div>
+          <div className="hero-text-container">
+            <motion.div
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="hero-title-container"
+            >
+              <h1 className="hero-main-title">Tip Tap Pay</h1>
+              <div className="hero-subtitle">
+                Future of <span className="hero-subtitle-highlight">Digital Shopping</span>
+              </div>
+            </motion.div>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            className="hero-description"
-          >
-            Experience the magic of NFC technology and QR codes.
-            <br />
-            <span className="hero-description-highlight">Tap, Scan, Shop - It's that simple!</span>
-          </motion.p>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="hero-description"
+            >
+              Experience the magic of NFC technology and QR codes.
+              <br />
+              <span className="hero-description-highlight">Tap, Scan, Shop - It's that simple!</span>
+            </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
-            className="hero-buttons"
-          >
-            <Link to="/scanner" className="hero-button hero-button-primary">
-              <span className="hero-button-content">🚀 Start Shopping</span>
-              <div className="hero-button-overlay"></div>
-            </Link>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+              className="hero-buttons"
+            >
+              <Link to="/scanner" className="hero-button hero-button-primary">
+                <span className="hero-button-content">🚀 Start Shopping</span>
+                <div className="hero-button-overlay"></div>
+              </Link>
 
-            <Link to="/nfc-manager" className="hero-button hero-button-secondary">
-              <span className="hero-button-content">📱 NFC Manager</span>
-              <div className="hero-button-overlay"></div>
-            </Link>
-          </motion.div>
+              <Link to="/nfc-manager" className="hero-button hero-button-secondary">
+                <span className="hero-button-content">📱 NFC Manager</span>
+                <div className="hero-button-overlay"></div>
+              </Link>
+            </motion.div>
+          </div>
 
-          {/* Scroll Indicator - Now positioned after buttons */}
+          {/* Scroll Indicator */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

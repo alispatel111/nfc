@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react"
 import { motion } from "framer-motion"
-import toast from "react-hot-toast"
 import QrScanner from "qr-scanner"
 import { useCart } from "../utils/CartContext.jsx"
 import { getProductById } from "../utils/productData.js"
@@ -42,16 +41,12 @@ const QRScannerComponent = ({ isActive = true, onProductAdded }) => {
 
           await scannerRef.current.start()
           setIsScanning(true)
-          // Use a unique toast ID to prevent duplicates
-          toast.success("QR Scanner activated!", {
-            id: "qr-scanner-activated",
-            icon: "📷",
-          })
+          // Removed toast.success
           console.log("📷 QR Scanner started")
         }
       } catch (error) {
         console.error("Error starting scanner:", error)
-        toast.error("Camera access denied or not available")
+        // Removed toast.error
       }
     }
 
@@ -75,9 +70,7 @@ const QRScannerComponent = ({ isActive = true, onProductAdded }) => {
     setScanStatus("scanning")
     playBeepSound()
 
-    const scanningToast = toast.loading(`Scanning ${data}...`, {
-      id: `scanning-${data}`,
-    })
+    // Removed scanningToast
 
     try {
       const product = await getProductById(data)
@@ -86,9 +79,7 @@ const QRScannerComponent = ({ isActive = true, onProductAdded }) => {
         if (isItemInCart(product.id)) {
           setTimeout(() => {
             setScanStatus("error")
-            toast.error(`${product.name} is already in your cart!`, {
-              id: `duplicate-${product.id}`,
-            })
+            // Removed toast.error
 
             setTimeout(() => {
               setScanStatus("idle")
@@ -100,11 +91,7 @@ const QRScannerComponent = ({ isActive = true, onProductAdded }) => {
             setScanStatus("success")
             playSuccessSound()
             addItemOnce(product)
-            toast.success(`✅ Added ${product.name} to cart!`, {
-              id: `success-${product.id}`,
-              icon: "🛒",
-              duration: 3000,
-            })
+            // Removed toast.success
 
             if (onProductAdded) {
               onProductAdded(product)
@@ -119,9 +106,7 @@ const QRScannerComponent = ({ isActive = true, onProductAdded }) => {
       } else {
         setTimeout(() => {
           setScanStatus("error")
-          toast.error(`Product ${data} not found`, {
-            id: `not-found-${data}`,
-          })
+          // Removed toast.error
 
           setTimeout(() => {
             setScanStatus("idle")
@@ -133,7 +118,7 @@ const QRScannerComponent = ({ isActive = true, onProductAdded }) => {
       console.error("Error fetching product:", error)
       setTimeout(() => {
         setScanStatus("error")
-        toast.error("Error connecting to server", { id: scanningToast })
+        // Removed toast.error
 
         setTimeout(() => {
           setScanStatus("idle")

@@ -1,4 +1,4 @@
-// Your deployed backend URL
+// Your deployed backend URL - FIXED
 const API_BASE_URL = "https://tap-pin-pay-nfc-backend.vercel.app/api"
 
 // Test API connection on load

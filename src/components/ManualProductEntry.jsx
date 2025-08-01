@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import toast from "react-hot-toast"
 import { useCart } from "../utils/CartContext.jsx"
 import { getAllProducts, getProductById } from "../utils/productData.js"
 import { playSuccessSound } from "../utils/soundUtils.js"
@@ -27,20 +26,14 @@ const ManualProductEntry = ({ onProductAdded }) => {
       const products = await getAllProducts()
       setAllProducts(products)
       console.log("✅ Loaded", Object.keys(products).length, "products")
-      toast.success(`Loaded ${Object.keys(products).length} products`, {
-        id: "products-loaded",
-        icon: "📦",
-      })
     } catch (error) {
       console.error("❌ Error loading products:", error)
-      toast.error("Failed to load products from database")
     }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!productId.trim()) {
-      toast.error("Please enter a Product ID")
       return
     }
     await addProductToCart(productId.trim().toUpperCase())
@@ -48,26 +41,16 @@ const ManualProductEntry = ({ onProductAdded }) => {
 
   const addProductToCart = async (id) => {
     setIsLoading(true)
-    const loadingToast = toast.loading(`Looking up ${id}...`, {
-      id: `lookup-${id}`,
-    })
 
     try {
       const product = await getProductById(id)
 
       if (product) {
         if (isItemInCart(product.id)) {
-          toast.error(`${product.name} is already in your cart!`, {
-            id: `manual-duplicate-${product.id}`,
-          })
+          // Product already in cart, no action needed
         } else {
           addItemOnce(product)
           playSuccessSound()
-          toast.success(`✅ Added ${product.name} to cart!`, {
-            id: `manual-success-${product.id}`,
-            icon: "🛒",
-            duration: 3000,
-          })
 
           if (onProductAdded) {
             onProductAdded(product)
@@ -75,13 +58,10 @@ const ManualProductEntry = ({ onProductAdded }) => {
           setProductId("")
         }
       } else {
-        toast.error(`Product ${id} not found`, {
-          id: `manual-not-found-${id}`,
-        })
+        // Product not found
       }
     } catch (error) {
       console.error("Error fetching product:", error)
-      toast.error("Error connecting to server", { id: loadingToast })
     } finally {
       setIsLoading(false)
     }
@@ -130,10 +110,6 @@ const ManualProductEntry = ({ onProductAdded }) => {
         <button
           onClick={() => {
             setShowProductList(!showProductList)
-            toast.success(showProductList ? "Product list hidden" : "Product list shown", {
-              id: "product-list-toggle",
-              icon: "👁️",
-            })
           }}
           className="nav-btn info"
           style={{ fontSize: "0.875rem", padding: "0.5rem 1rem" }}
@@ -201,10 +177,6 @@ const ManualProductEntry = ({ onProductAdded }) => {
               <button
                 onClick={() => {
                   loadAllProducts()
-                  toast.success("Products refreshed!", {
-                    id: "products-refreshed",
-                    icon: "🔄",
-                  })
                 }}
                 className="nav-btn secondary"
                 style={{ fontSize: "0.75rem", padding: "0.5rem 1rem" }}
@@ -262,14 +234,14 @@ const ManualProductEntry = ({ onProductAdded }) => {
                       className="card"
                       style={{
                         padding: "1.5rem",
-                        cursor: "pointer",
+                        // Removed cursor: "pointer"
                         position: "relative",
                         background: isItemInCart(product.id) ? "rgba(16, 185, 129, 0.05)" : "var(--bg-primary)",
                         border: isItemInCart(product.id)
                           ? "2px solid var(--secondary-color)"
                           : "1px solid var(--border-light)",
                       }}
-                      onClick={() => addProductToCart(product.id)}
+                      // Removed onClick={() => addProductToCart(product.id)}
                       whileHover={{ y: -4, boxShadow: "var(--shadow-xl)" }}
                       whileTap={{ scale: 0.98 }}
                     >
